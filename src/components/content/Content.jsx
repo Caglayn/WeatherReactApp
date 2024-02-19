@@ -4,6 +4,7 @@ import CheckBoxCard from '../body/CheckBoxCard';
 import { getDailySummary, getHourlyVars } from '../../api/WeatherService';
 import LocationSelector from '../body/LocationSelector';
 import SummaryCard from '../body/SummaryCard';
+import SpinnerButton from '../buttons/SpinnerButton';
 
 const Content = () => {
     const [selectedDate, setSelectedDate] = useState();
@@ -12,6 +13,7 @@ const Content = () => {
     const [longitude, setLongitude] = useState();
     const [isUpdateButtonVisible, setIsUpdateButtonVisible] = useState(false);
     const [summaryList, setSummaryList] = useState([]);
+    const [apiProgress, setApiProgress] = useState(false);
 
     /*useEffect(()=>{
         getHourlyVars().then(response => {
@@ -26,12 +28,17 @@ const Content = () => {
     }, [latitude, longitude, selectedDate]);
 
     const handleOnClickUpdate = () => {
+        setApiProgress(true);
         getDailySummary(latitude, longitude, selectedDate.split('T')[0])
         .then(response => {
             setSummaryList(response.data);
             setIsUpdateButtonVisible(false);
+            setApiProgress(false);
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+            console.error(err);
+            setApiProgress(false);
+        });
     }
 
   return (
@@ -66,7 +73,7 @@ const Content = () => {
                             </div>
                             <div className="card-body text-center">
                                 <div className="mb-3">
-                                    <button className="btn btn-primary btn-lg" onClick={handleOnClickUpdate}>Update</button>
+                                    <SpinnerButton handleOnClick={handleOnClickUpdate} loading={apiProgress} text={"Update"} />
                                 </div>
                             </div>
                         </div> 

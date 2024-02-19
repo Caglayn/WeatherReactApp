@@ -3,19 +3,26 @@ import { useDispatch } from 'react-redux';
 import { loginWithUsername } from '../api/UserService';
 import { storeUser } from '../redux/UserSlice';
 import { useNavigate } from 'react-router-dom';
+import SpinnerButton from '../components/buttons/SpinnerButton';
 
 const SignIn = () => {
     const[userName, setUserName] = useState();
     const[password, setPassword] = useState();
+    const[apiProgress, setApiProgress] = useState(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleOnClickLogin = async () => {
+        setApiProgress(true);
         loginWithUsername(userName, password).then(response => {
             console.log(response);
-            dispatch(storeUser(response.data))
-        }).catch(error => console.log(error));
+            dispatch(storeUser(response.data));
+            setApiProgress(false);
+        }).catch(error => {
+            console.log(error);
+            setApiProgress(false);
+        });
     }
 
     const handleOnClickSignUp = () => {
@@ -55,8 +62,8 @@ const SignIn = () => {
                                                     <label className="form-check-label text-small" htmlFor="customControlInline">Remember me</label>
                                                 </div>
                                             </div>
-                                            <div className="d-grid gap-2 mt-3">
-                                                <a className="btn btn-lg btn-primary" onClick={handleOnClickLogin}>Sign in</a>
+                                            <div className="d-grid gap-2 mt-3 text-center">
+                                                <SpinnerButton handleOnClick={handleOnClickLogin} loading={apiProgress} text={"Sign in"} />
                                             </div>
                                         </form>
                                     </div>
