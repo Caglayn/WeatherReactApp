@@ -4,7 +4,7 @@ const Logo = () => {
   return (
     <div>
         <a className="sidebar-brand" href="/">
-            <span className="align-middle">My Logo</span>
+            <span className="align-middle">c8n logo</span>
         </a>
     </div>
   )

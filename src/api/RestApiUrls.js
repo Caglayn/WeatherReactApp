@@ -7,3 +7,4 @@ export const LOGOUT = '/logout';
 export const GETDAILYVARS = '/getalldailyvars';
 export const GETHOURLYVARS = '/getallhourlyvars';
 export const GETDAILYSUMMARY = '/getdailysummary';
+export const GETHOURLYDATABYPARAM = '/gethourlydatabyparam';

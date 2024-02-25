@@ -18,3 +18,13 @@ export const getDailySummary = (lat, lon, date) => {
             date: date
         }})
 }
+
+export const getHourlyDataByParam = (lat, lon, date, param) => {
+    return axios.get(URL.WEATHER_SERVICE + URL.GETHOURLYDATABYPARAM, 
+        {params: {
+            latitude: lat,
+            longitude: lon,
+            date: date,
+            param: param
+        }})
+}
