@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { loginWithUsername } from '../api/UserService';
+import { loginWithUsername, setToken } from '../api/UserService';
 import { storeUser } from '../redux/UserSlice';
 import { useNavigate } from 'react-router-dom';
 import SpinnerButton from '../components/buttons/SpinnerButton';
@@ -19,6 +19,7 @@ const SignIn = () => {
             console.log(response);
             dispatch(storeUser(response.data));
             setApiProgress(false);
+            setToken(response.data.token);
         }).catch(error => {
             console.log(error);
             setApiProgress(false);
